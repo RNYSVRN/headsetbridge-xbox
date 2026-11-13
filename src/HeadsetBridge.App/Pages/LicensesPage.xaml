@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="HeadsetBridge.Pages.LicensesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:HeadsetBridge.Core"
+    xmlns:local="using:HeadsetBridge"
+    Background="Transparent">
+
+    <Grid MaxWidth="{StaticResource PageMaxWidth}" Padding="{StaticResource PagePadding}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{local:Loc Key=Nav.Licenses}" Style="{StaticResource PageTitleStyle}" />
+        <TextBlock Grid.Row="1" Style="{StaticResource PageDescriptionStyle}"
+                   Text="{local:Loc Key=Lic.Description}" />
+
+        <AutoSuggestBox x:Name="SearchBox" Grid.Row="2" Margin="0,0,0,12" PlaceholderText="{local:Loc Key=Lic.Search}"
+                        QueryIcon="Find" TextChanged="SearchBox_TextChanged"
+                        AutomationProperties.Name="{local:Loc Key=Lic.Search}" />
+
+        <Border Grid.Row="3" Style="{StaticResource CardStyle}" Padding="0" MinHeight="320">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="260" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ListView x:Name="LicenseList" SelectionMode="Single" Padding="0,4"
+                          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="0,0,1,0"
+                          SelectionChanged="LicenseList_SelectionChanged"
+                          AutomationProperties.Name="{local:Loc Key=Nav.Licenses}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="core:License">
+                            <TextBlock Text="{x:Bind Name}" TextWrapping="Wrap" Margin="0,6"
+                                       Style="{StaticResource CaptionTextBlockStyle}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <ScrollViewer x:Name="TextScroller" Grid.Column="1" Padding="20,16"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="12">
+                        <TextBlock x:Name="LicenseTitle" Style="{StaticResource BodyStrongTextBlockStyle}" TextWrapping="Wrap" />
+                        <TextBlock x:Name="LicenseText" FontFamily="Cascadia Mono, Consolas" FontSize="12"
+                                   TextWrapping="Wrap" IsTextSelectionEnabled="True"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                   AutomationProperties.Name="{local:Loc Key=Nav.Licenses}" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <TextBlock x:Name="NoMatches" Grid.ColumnSpan="2" Text="Keine passenden Einträge."
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

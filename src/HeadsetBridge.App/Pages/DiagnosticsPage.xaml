@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="HeadsetBridge.Pages.DiagnosticsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HeadsetBridge"
+    xmlns:pages="using:HeadsetBridge.Pages"
+    Background="Transparent">
+
+    <ScrollViewer>
+        <StackPanel MaxWidth="{StaticResource PageMaxWidth}" Padding="{StaticResource PagePadding}">
+            <TextBlock Text="{local:Loc Key=Nav.Diagnostics}" Style="{StaticResource PageTitleStyle}" />
+            <TextBlock Style="{StaticResource PageDescriptionStyle}"
+                       Text="{local:Loc Key=Diag.Description}" />
+
+            <StackPanel Spacing="4">
+                <local:SettingsRow Glyph="&#xE703;" Header="{local:Loc Key=Diag.Connection}">
+                    <TextBlock x:Name="StateText" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </local:SettingsRow>
+                <local:SettingsRow Glyph="&#xE7F5;" Header="{local:Loc Key=Diag.Output}">
+                    <TextBlock x:Name="DeviceText" MaxWidth="360" TextTrimming="CharacterEllipsis"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </local:SettingsRow>
+            </StackPanel>
+
+            <Grid Margin="0,24,0,8">
+                <TextBlock Text="{local:Loc Key=Diag.Events}" Style="{StaticResource BodyStrongTextBlockStyle}" VerticalAlignment="Center" />
+                <Button x:Name="CopyButton" HorizontalAlignment="Right" Click="CopyButton_Click" AutomationProperties.Name="{local:Loc Key=Diag.Copy}">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <FontIcon x:Name="CopyGlyph" Glyph="&#xE8C8;" FontSize="14" />
+                        <TextBlock x:Name="CopyText" Text="{local:Loc Key=Diag.Copy}" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+            <Border Style="{StaticResource CardStyle}" Padding="0">
+                <Grid>
+                    <ItemsRepeater x:Name="EventList" Margin="0,4">
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate x:DataType="pages:DiagnosticItem">
+                                <Grid Padding="16,10" ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="44" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{x:Bind Time}" FontFamily="Consolas"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" VerticalAlignment="Top" />
+                                    <FontIcon Grid.Column="1" Glyph="{x:Bind Glyph}" FontSize="14" Margin="0,2,0,0"
+                                              Foreground="{x:Bind Foreground}" VerticalAlignment="Top"
+                                              AutomationProperties.Name="{x:Bind LevelName}" />
+                                    <TextBlock Grid.Column="2" Text="{x:Bind Message}" TextWrapping="Wrap" IsTextSelectionEnabled="True" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                    </ItemsRepeater>
+
+                    <StackPanel x:Name="EmptyState" Padding="24,36" Spacing="8" HorizontalAlignment="Center">
+                        <FontIcon Glyph="&#xE9D9;" FontSize="28" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        <TextBlock Text="{local:Loc Key=Diag.EmptyTitle}" Style="{StaticResource BodyStrongTextBlockStyle}"
+                                   HorizontalAlignment="Center" />
+                        <TextBlock Text="{local:Loc Key=Diag.EmptyText}" Style="{StaticResource SecondaryTextStyle}"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <TextBlock Margin="0,12,0,0" Style="{StaticResource SecondaryTextStyle}"
+                       Text="{local:Loc Key=Diag.Footer}" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

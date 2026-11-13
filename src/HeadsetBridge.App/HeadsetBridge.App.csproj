@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>HeadsetBridge</RootNamespace>
+    <AssemblyName>HeadsetBridge</AssemblyName>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <UseWinUI>true</UseWinUI>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <SelfContained>true</SelfContained>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\headsetbridge.ico</ApplicationIcon>
+    <Version>2.0.0</Version>
+    <Product>HeadsetBridge für Xbox</Product>
+    <Company>HeadsetBridge</Company>
+    <Copyright>MIT License – The HeadsetBridge for Xbox contributors</Copyright>
+    <SatelliteResourceLanguages>de;en</SatelliteResourceLanguages>
+    <DefaultLanguage>de-DE</DefaultLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Nur die benötigten Komponenten statt des Metapakets Microsoft.WindowsAppSDK:
+         dessen KI-/ML-Teile (onnxruntime, DirectML, ~38 MB) braucht die App nicht. -->
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.8.260803003" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.DWrite" Version="1.8.25122902" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2957" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HeadsetBridge.Core\HeadsetBridge.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\headsetbridge.ico" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Lizenzhinweise.txt" CopyToOutputDirectory="PreserveNewest" />
+    <!-- Audio-Engine: wird von Build.ps1 nach engine\ gebaut; fehlt sie, zeigt die App einen Hinweis. -->
+    <Content Include="..\..\engine\target\release\headsetbridge-engine.exe" Link="engine\headsetbridge-engine.exe"
+             CopyToOutputDirectory="PreserveNewest" Condition="Exists('..\..\engine\target\release\headsetbridge-engine.exe')" />
+  </ItemGroup>
+</Project>

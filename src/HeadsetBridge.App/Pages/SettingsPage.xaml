@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="HeadsetBridge.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HeadsetBridge"
+    Background="Transparent">
+
+    <ScrollViewer>
+        <StackPanel MaxWidth="{StaticResource PageMaxWidth}" Padding="{StaticResource PagePadding}">
+            <TextBlock Text="{local:Loc Key=Nav.Settings}" Style="{StaticResource PageTitleStyle}" />
+            <TextBlock Style="{StaticResource PageDescriptionStyle}" Text="{local:Loc Key=Set.Description}" />
+
+            <TextBlock Text="{local:Loc Key=Set.Appearance}" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,8" />
+            <StackPanel Spacing="4">
+            <local:SettingsRow Glyph="&#xF2B7;" Header="{local:Loc Key=Set.Language}" Description="{local:Loc Key=Set.LanguageDesc}">
+                <ComboBox x:Name="LanguageBox" MinWidth="160" SelectionChanged="LanguageBox_SelectionChanged">
+                    <ComboBoxItem Content="System" Tag="system" />
+                    <ComboBoxItem Content="Deutsch" Tag="de" />
+                    <ComboBoxItem Content="English" Tag="en" />
+                </ComboBox>
+            </local:SettingsRow>
+            <local:SettingsRow Glyph="&#xE790;" Header="{local:Loc Key=Set.Theme}" Description="{local:Loc Key=Set.ThemeDesc}">
+                <ComboBox x:Name="ThemeBox" MinWidth="160" SelectionChanged="ThemeBox_SelectionChanged">
+                    <ComboBoxItem Content="{local:Loc Key=Set.ThemeSystem}" Tag="system" />
+                    <ComboBoxItem Content="{local:Loc Key=Set.ThemeLight}" Tag="light" />
+                    <ComboBoxItem Content="{local:Loc Key=Set.ThemeDark}" Tag="dark" />
+                </ComboBox>
+            </local:SettingsRow>
+            </StackPanel>
+
+            <TextBlock Text="{local:Loc Key=Set.Windows}" Style="{StaticResource SectionHeaderStyle}" />
+            <StackPanel Spacing="4">
+                <local:SettingsRow Glyph="&#xE7F5;" Header="{local:Loc Key=Set.Sound}" Description="{local:Loc Key=Set.SoundDesc}">
+                    <local:ExternalLink Content="{local:Loc Key=Common.Open}" Target="ms-settings:sound" />
+                </local:SettingsRow>
+                <local:SettingsRow Glyph="&#xE790;" Header="{local:Loc Key=Set.Colors}" Description="{local:Loc Key=Set.ColorsDesc}">
+                    <local:ExternalLink Content="{local:Loc Key=Common.Open}" Target="ms-settings:colors" />
+                </local:SettingsRow>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

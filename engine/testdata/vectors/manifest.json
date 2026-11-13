@@ -1,0 +1,53 @@
+{
+  "source": "the Node prototype",
+  "timeMs": 1234.5,
+  "ids": [
+    "00000000-0000-4000-8000-000000000001",
+    "00000000-0000-4000-8000-000000000002",
+    "00000000-0000-4000-8000-000000000003",
+    "00000000-0000-4000-8000-000000000004",
+    "00000000-0000-4000-8000-000000000005",
+    "00000000-0000-4000-8000-000000000006",
+    "00000000-0000-4000-8000-000000000007",
+    "00000000-0000-4000-8000-000000000008"
+  ],
+  "channelOrder": [
+    [
+      "input",
+      "1.0"
+    ],
+    [
+      "chat",
+      "chatV1"
+    ],
+    [
+      "control",
+      "controlV1"
+    ],
+    [
+      "message",
+      "messageV1"
+    ]
+  ],
+  "sequences": {
+    "metadata": 0,
+    "idle-nudge": 1,
+    "gamepad-idle": 42,
+    "gamepad-two-frames": 65535
+  },
+  "files": [
+    "handshake.bin",
+    "authorization.bin",
+    "gamepad-added.bin",
+    "metadata.bin",
+    "idle-nudge.bin",
+    "gamepad-idle.bin",
+    "gamepad-two-frames.bin",
+    "configuration0.bin",
+    "configuration1.bin",
+    "configuration2.bin",
+    "configuration3.bin",
+    "configuration4.bin",
+    "configuration5.bin"
+  ]
+}

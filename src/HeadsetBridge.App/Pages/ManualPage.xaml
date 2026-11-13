@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="HeadsetBridge.Pages.ManualPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HeadsetBridge"
+    Background="Transparent">
+
+    <Page.Resources>
+        <Style x:Key="ManualExpander" TargetType="Expander">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+        <Style x:Key="ManualText" TargetType="TextBlock" BasedOn="{StaticResource BodyTextBlockStyle}">
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="IsTextSelectionEnabled" Value="True" />
+        </Style>
+    </Page.Resources>
+
+    <ScrollViewer>
+        <StackPanel MaxWidth="{StaticResource PageMaxWidth}" Padding="{StaticResource PagePadding}">
+            <TextBlock Text="{local:Loc Key=Nav.Manual}" Style="{StaticResource PageTitleStyle}" />
+            <TextBlock Style="{StaticResource PageDescriptionStyle}"
+                       Text="{local:Loc Key=Man.Description}" />
+
+            <TextBlock Text="{local:Loc Key=Man.Setup}" Style="{StaticResource SectionHeaderStyle}" Margin="0,0,0,8" />
+            <StackPanel Spacing="4">
+                <local:SettingsRow Glyph="&#xE7FC;" Header="{local:Loc Key=Man.Step1.Title}"
+                                   Description="{local:Loc Key=Man.Step1.Text}" />
+                <local:SettingsRow Glyph="&#xE968;" Header="{local:Loc Key=Man.Step2.Title}"
+                                   Description="{local:Loc Key=Man.Step2.Text}" />
+                <local:SettingsRow Glyph="&#xE7F5;" Header="{local:Loc Key=Man.Step3.Title}"
+                                   Description="{local:Loc Key=Man.Step3.Text}">
+                    <local:ExternalLink Content="{local:Loc Key=Man.SoundSettings}" Target="ms-settings:sound" />
+                </local:SettingsRow>
+                <local:SettingsRow Glyph="&#xE768;" Header="{local:Loc Key=Man.Step4.Title}"
+                                   Description="{local:Loc Key=Man.Step4.Text}" />
+            </StackPanel>
+
+            <TextBlock Text="{local:Loc Key=Man.Faq}" Style="{StaticResource SectionHeaderStyle}" />
+            <StackPanel Spacing="4">
+                <Expander Style="{StaticResource ManualExpander}" Header="{local:Loc Key=Man.Q1.Title}">
+                    <TextBlock Style="{StaticResource ManualText}" Text="{local:Loc Key=Man.Q1.Text}" />
+                </Expander>
+                <Expander Style="{StaticResource ManualExpander}" Header="{local:Loc Key=Man.Q2.Title}">
+                    <TextBlock Style="{StaticResource ManualText}" Text="{local:Loc Key=Man.Q2.Text}" />
+                </Expander>
+                <Expander Style="{StaticResource ManualExpander}" Header="{local:Loc Key=Man.Q3.Title}">
+                    <TextBlock Style="{StaticResource ManualText}" Text="{local:Loc Key=Man.Q3.Text}" />
+                </Expander>
+                <Expander Style="{StaticResource ManualExpander}" Header="{local:Loc Key=Man.Q4.Title}">
+                    <TextBlock Style="{StaticResource ManualText}" Text="{local:Loc Key=Man.Q4.Text}" />
+                </Expander>
+                <Expander Style="{StaticResource ManualExpander}" Header="{local:Loc Key=Man.Q5.Title}">
+                    <TextBlock Style="{StaticResource ManualText}" Text="{local:Loc Key=Man.Q5.Text}" />
+                </Expander>
+                <Expander Style="{StaticResource ManualExpander}" Header="{local:Loc Key=Man.Q6.Title}">
+                    <TextBlock Style="{StaticResource ManualText}" Text="{local:Loc Key=Man.Q6.Text}" />
+                </Expander>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

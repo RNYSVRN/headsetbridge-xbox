@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="HeadsetBridge.Pages.ConnectionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HeadsetBridge"
+    Background="Transparent">
+
+    <ScrollViewer>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="ConnectionStates">
+                <VisualState x:Name="Idle" />
+                <VisualState x:Name="Connected">
+                    <VisualState.Setters>
+                        <Setter Target="StatusCircle.Fill" Value="{ThemeResource AccentFillColorDefaultBrush}" />
+                        <Setter Target="StatusIcon.Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                        <Setter Target="Link1.Fill" Value="{ThemeResource AccentFillColorDefaultBrush}" />
+                        <Setter Target="Link2.Fill" Value="{ThemeResource AccentFillColorDefaultBrush}" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Failed">
+                    <VisualState.Setters>
+                        <Setter Target="StatusCircle.Fill" Value="{ThemeResource SystemFillColorCriticalBackgroundBrush}" />
+                        <Setter Target="StatusIcon.Foreground" Value="{ThemeResource SystemFillColorCriticalBrush}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <StackPanel MaxWidth="{StaticResource PageMaxWidth}" Padding="{StaticResource PagePadding}">
+            <TextBlock Text="{local:Loc Key=Nav.Connection}" Style="{StaticResource PageTitleStyle}" />
+            <TextBlock Style="{StaticResource PageDescriptionStyle}"
+                       Text="{local:Loc Key=Conn.Description}" />
+
+            <!-- Statuskarte -->
+            <Border Style="{StaticResource CardStyle}" Padding="0">
+                <StackPanel>
+                    <Grid Padding="24" ColumnSpacing="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Width="64" Height="64" VerticalAlignment="Center">
+                            <Ellipse x:Name="StatusCircle" Fill="{ThemeResource SubtleFillColorSecondaryBrush}" />
+                            <FontIcon x:Name="StatusIcon" Glyph="&#xE7F6;" FontSize="28" />
+                            <ProgressRing x:Name="StatusRing" Width="64" Height="64" IsActive="False" />
+                        </Grid>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+                            <TextBlock x:Name="StatusTitle" Style="{StaticResource SubtitleTextBlockStyle}"
+                                       TextWrapping="Wrap" Text="{local:Loc Key=Status.Idle.Title}" />
+                            <TextBlock x:Name="StatusDetail" Style="{StaticResource BodyTextBlockStyle}"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" TextWrapping="Wrap" />
+                        </StackPanel>
+
+                        <Button x:Name="ConnectButton" Grid.Column="2" VerticalAlignment="Center" MinWidth="190"
+                                Style="{StaticResource AccentButtonStyle}" Click="ConnectButton_Click">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon x:Name="ConnectGlyph" Glyph="&#xE768;" FontSize="14" />
+                                <TextBlock x:Name="ConnectText" Text="{local:Loc Key=Conn.Connect}" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <!-- Signalweg Xbox → PC → Ausgabe -->
+                    <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="0,1,0,0"
+                            Background="{ThemeResource LayerOnMicaBaseAltFillColorTransparentBrush}" Padding="24,12">
+                        <Grid ColumnSpacing="24">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel x:Name="SignalPath" Orientation="Horizontal" Spacing="10"
+                                        VerticalAlignment="Center">
+                                <FontIcon Glyph="&#xE990;" FontSize="14" />
+                                <TextBlock Text="Xbox" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Center" />
+                                <Rectangle x:Name="Link1" Width="36" Height="1" VerticalAlignment="Center"
+                                           Fill="{ThemeResource ControlStrokeColorDefaultBrush}" />
+                                <FontIcon Glyph="&#xE7F4;" FontSize="14" />
+                                <TextBlock Text="PC" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Center" />
+                                <Rectangle x:Name="Link2" Width="36" Height="1" VerticalAlignment="Center"
+                                           Fill="{ThemeResource ControlStrokeColorDefaultBrush}" />
+                                <FontIcon Glyph="&#xE767;" FontSize="14" />
+                                <TextBlock Text="{local:Loc Key=Conn.Output}" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="{local:Loc Key=Conn.AudioOnly}"
+                                       HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"
+                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <InfoBar x:Name="StatusInfo" Margin="0,8,0,0" IsOpen="False" IsClosable="False" />
+
+            <TextBlock Text="{local:Loc Key=Conn.AudioSection}" Style="{StaticResource SectionHeaderStyle}" />
+            <StackPanel Spacing="4">
+                <local:SettingsRow Glyph="&#xE7F5;" Header="{local:Loc Key=Conn.Output}"
+                                   Description="{local:Loc Key=Conn.OutputDesc}">
+                    <TextBlock x:Name="DeviceText" Text="{local:Loc Key=Device.Default}" MaxWidth="320"
+                               TextTrimming="CharacterEllipsis" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </local:SettingsRow>
+                <local:SettingsRow Glyph="&#xE8D6;" Header="{local:Loc Key=Conn.Format}" x:Name="FormatRow"
+                                   Description="{local:Loc Key=Conn.FormatUnavailable}">
+                    <TextBlock x:Name="FormatText" Text="{local:Loc Key=Conn.NotConnected}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </local:SettingsRow>
+                <local:SettingsRow Glyph="&#xE995;" Header="{local:Loc Key=Conn.Volume}"
+                                   Description="{local:Loc Key=Conn.VolumeDesc}">
+                    <local:ExternalLink Content="{local:Loc Key=Conn.OpenSound}" Target="ms-settings:sound" />
+                </local:SettingsRow>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,16,0,0">
+                <FontIcon Glyph="&#xE946;" FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBlock Style="{StaticResource SecondaryTextStyle}" VerticalAlignment="Center"
+                           Text="{local:Loc Key=Conn.Hint}" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
